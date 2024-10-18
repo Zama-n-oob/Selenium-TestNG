@@ -2,7 +2,11 @@ package introduction;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class RsaLogInValidation {
@@ -32,8 +36,27 @@ public class RsaLogInValidation {
 		//<input type="text" placeholder="Name">; A xpath can be "//input[@placeholder='Name']"
 		driver.findElement(By.cssSelector("input[placeholder='Email']")).sendKeys("ahmedzaman.069@gmail.com");
 		//<input type="text" placeholder="Email">; Constructed cssSelector using "tagname[attribute='value']"
+		driver.findElement(By.xpath("//form/input[3]")).sendKeys("01798757746");
+		//Constructed xPath using syntax "//parentTagName/childTagName[index]
+		
+		//Clearing texts from a text box using :
+		//clear() method :
 		driver.findElement(By.xpath("//input[@type='text'][2]")).clear();
 		//Customized xPath using //tagname[attribute='value'][index]
+		//Keys class
+		WebElement textbox = driver.findElement(By.xpath("//input[@placeholder='Name']"));
+		int lenOfTextbox = textbox.getAttribute("value").length();
+		for(int i=0; i<lenOfTextbox; i++) {
+			textbox.sendKeys(Keys.BACK_SPACE);
+		};
+		//Action interface
+		WebElement textbox1 = driver.findElement(By.xpath("//form/input[3]"));
+		Actions actions = new Actions(driver);
+		actions.click(textbox1);
+		actions.keyDown(textbox1, Keys.CONTROL).sendKeys(Keys.DELETE);
+		actions.perform();
+		
+		driver.findElement(By.xpath("//input[@placeholder='Name']")).sendKeys("Zaman");
 		driver.findElement(By.cssSelector("input[type='text']:nth-child(3)")).sendKeys("mangoahmed.69@gmail.com");
 		//Customized cssSelector using tagname[attribute='value']:nth-child(index+1) ; (index+1) for possibility of hidden element(check using console by $('attribute="value"))
 		driver.findElement(By.xpath("//form/input[3]")).sendKeys("01851207570");
